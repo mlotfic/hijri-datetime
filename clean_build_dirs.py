@@ -51,7 +51,10 @@ git commit -m "Bump version for new release"
 # Rebuild - this will create a version like 0.0.1.dev1+g1234567
 python -m build
 
-
+git tag v0.2.0
+git push origin v0.2.0
+python -m build
+twine upload dist/*
 
 # 5. Install development dependencies
 pip install -e ".[dev]"

@@ -1,5 +1,7 @@
 # hijri-datetime
 
+# 💡💡💡💡💡💡 **this not working yet** 💡💡💡💡
+
 📅 **Hijri (Islamic) calendar datetime library for Python**  
 A drop-in replacement for Python's built-in `datetime` module, supporting Hijri date arithmetic, formatting, conversion, partial dates, and integration with `jdatetime`.
 
