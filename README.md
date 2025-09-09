@@ -17,7 +17,7 @@ A drop-in replacement for Python's built-in `datetime` module, supporting Hijri 
   - Arithmetic supports ranges and comparisons.
 
 - **Gregorian ↔ Hijri Conversion**  
-  - Vectorized conversion using preloaded dataset (from [Aladhan API](https://api.aladhan.com/)).
+  - Vectorized conversion using preloaded dataset (from [Aladhan API](https://aladhan.com/islamic-calendar-api)).
   - Accurate conversion for historical and future dates.
   
 - **Integration with jdatetime**  
@@ -149,7 +149,7 @@ print(greg_dates)
 ## Contributing
 
 Pull requests are welcome! Please open an issue first to discuss major changes.
-Ensure tests pass before submitting PRs.
+Could you make sure tests pass before submitting PRs?
 
 ---
 
