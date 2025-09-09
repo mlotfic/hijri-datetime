@@ -9,9 +9,8 @@ build-backend = "setuptools.build_meta"
 # Project Metadata
 # -----------------------------
 [project]
-name = "hijri-datetime" # PyPI/package install name (`pip install hijri_datetime`)
-# version = "2025.0.0"
-dynamic = ["version"]
+name = "hijri-datetime" # PyPI/package install name (`pip install hijri-datetime`)
+dynamic = ["version"]  # Use dynamic versioning from setuptools_scm
 requires-python = ">=3.8"
 authors = [
     { name = "m.lotfi", email = "m.lotfi@email.com" },
@@ -20,12 +19,14 @@ maintainers = [
     { name = "m.lotfi", email = "m.lotfi@email.com" },
 ]
 description = "Pythonic Hijri datetime — handle full & partial dates, ranges, and seamless Gregorian & Jalali conversion."
+long_description = "A comprehensive Python library for working with Hijri (Islamic) calendar dates, providing seamless conversion between Hijri, Gregorian, and Jalali calendars with support for date ranges, partial dates, and pythonic datetime operations."
 readme = { file = "README.md", content-type = "text/markdown" }
-license = { text = "GPL version 3" }  # old-style, accepted
+license = { text = "GPL version 3" }
 
 keywords = [
     "python", "package", "modules", "portable",
-    "hijri", "islamic", "calendar", "datetime"
+    "hijri", "islamic", "calendar", "datetime",
+    "gregorian", "jalali", "conversion"
 ]
 
 # Classifiers help PyPI categorize your package
@@ -40,30 +41,34 @@ classifiers = [
 
     # Indicate who your project is intended for
     "Intended Audience :: Developers",
-    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 
-    # Specify the Python versions you support here.
+    # Specify the Python versions you support here (aligned with requires-python)
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: Software Development :: Libraries :: Python Modules",
+    
+    # Operating Systems
+    "Operating System :: OS Independent",
+    
+    # Topics
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Internationalization",
+    "Topic :: Utilities",
 ]
 
 # -----------------------------
 # Runtime dependencies
 # -----------------------------
 dependencies = [
-    "jdatetime",
-    "requests",
-    "numpy",
-    "pandas"
+    "jdatetime>=3.0.0",
+    "requests>=2.20.0",
+    "numpy>=1.18.0",
+    "pandas>=1.0.0"
 ]
 
 # -----------------------------
@@ -93,12 +98,14 @@ dev = [
 test = [
     "pytest>=6.0",
     "pytest-cov>=2.0",
+    "pytest-mock>=3.0",
 ]
 
 # For documentation building
 docs = [
     "sphinx>=4.0",
     "sphinx-rtd-theme>=1.0",
+    "myst-parser>=0.17.0",
 ]
 
 # For linting only
@@ -106,47 +113,171 @@ lint = [
     "black>=22.0",
     "flake8>=4.0",
     "mypy>=0.900",
+    "isort>=5.0",
 ]
 
-# Unified group
+# Performance extras
+performance = [
+    "cython>=0.29.0",
+]
+
+# Unified group for convenience
 all = [
+    # Test dependencies
     "pytest>=6.0",
     "pytest-cov>=2.0",
+    "pytest-mock>=3.0",
+    # Code quality
     "black>=22.0",
     "flake8>=4.0",
     "mypy>=0.900",
+    "isort>=5.0",
     "pre-commit>=2.0",
+    # Build and release
     "tox>=3.0",
     "build>=0.10",
     "twine>=4.0",
     "setuptools_scm>=6.2",
     "setuptools>=45",
     "wheel",
+    # Documentation
     "sphinx>=4.0",
     "sphinx-rtd-theme>=1.0",
+    "myst-parser>=0.17.0",
+    # Performance
+    "cython>=0.29.0",
 ]
 
 # -----------------------------
 # Project URLs (for PyPI & docs)
 # -----------------------------
 [project.urls]
-Homepage = "https://github.com/mlotfic/hijri_datetime"
-Documentation = "https://github.com/mlotfic/hijri_datetime#readme"
-Repository = "https://github.com/mlotfic/hijri_datetime"
-"Bug Tracker" = "https://github.com/mlotfic/hijri_datetime/issues"
-Changelog = "https://github.com/mlotfic/hijri_datetime/blob/main/CHANGELOG.md"
-
-
+Homepage = "https://github.com/mlotfic/hijri-datetime"
+Documentation = "https://github.com/mlotfic/hijri-datetime#readme"
+Repository = "https://github.com/mlotfic/hijri-datetime.git"
+"Bug Tracker" = "https://github.com/mlotfic/hijri-datetime/issues"
+Changelog = "https://github.com/mlotfic/hijri-datetime/blob/main/CHANGELOG.md"
+"Source Code" = "https://github.com/mlotfic/hijri-datetime"
+"Download" = "https://pypi.org/project/hijri-datetime/"
 
 # -----------------------------
-# setuptools config
+# Entry Points (if you have CLI tools)
 # -----------------------------
+# Uncomment if you have command-line tools
+# [project.scripts]
+# hijri-convert = "hijri_datetime.cli:main"
+
+# -----------------------------
+# setuptools configuration
+# -----------------------------
+[tool.setuptools]
+# If you're using a src layout
+# packages = ["hijri_datetime"]
+package-dir = {"" = "src"}
+
+# Alternative if using flat layout (package directly in root)
+# packages = ["hijri_datetime"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["hijri_datetime*"]
+exclude = ["tests*"]
 
-
+# -----------------------------
+# setuptools_scm configuration (for version from git tags)
+# -----------------------------
 [tool.setuptools_scm]
 write_to = "src/hijri_datetime/_version.py"
 version_scheme = "post-release"
-local_scheme = "dirty-tag"
-fallback_version = "0.0.0"
+local_scheme = "no-local-version"  # Prevents +dirty suffix
+
+# -----------------------------
+# Tool configurations
+# -----------------------------
+
+# Black code formatter
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# isort import sorter
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["hijri_datetime"]
+
+# pytest configuration
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=hijri_datetime",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+# mypy type checker
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "jdatetime.*",
+    "numpy.*",
+    "pandas.*",
+]
+ignore_missing_imports = true
