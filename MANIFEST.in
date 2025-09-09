@@ -1,17 +1,8 @@
-# Always include core files
 include README.md
+include CHANGELOG.md  
 include LICENSE
 include pyproject.toml
-include setup.cfg
-
-# Include documentation (only in source distribution, not in wheel)
-recursive-include docs *
-
-# Include examples (good for users/contributors who grab the sdist)
-recursive-include examples *.py
-
-# Include test files (optional — skip if you want super-clean source tarball)
-# recursive-include tests *.py
-
-# Include data files under src/detect_dates/data
-recursive-include src/detect_dates/data *.csv *.json *.yml *.yaml *.txt
+recursive-include src *.py
+recursive-include tests *.py
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]

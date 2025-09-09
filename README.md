@@ -75,6 +75,10 @@ print(jd)        # jdatetime.date(...)
 
 ## Partial Dates & Ranges
 
+- `HijriDate(1446)` → represents the whole year.
+- `HijriDate(1446, 2)` → represents all days of month 2.
+- Conversion to Gregorian returns ranges:
+
 * **Year only**
 
   ```python
@@ -83,7 +87,7 @@ print(jd)        # jdatetime.date(...)
   print(start, end)  # 2024-07-18 2025-07-06 (example)
   ```
 
-* **Month only**
+* **Year and Month only**
 
   ```python
   d = HijriDate(1446, 2)

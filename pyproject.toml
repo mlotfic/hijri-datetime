@@ -2,37 +2,68 @@
 # Build System (required)
 # -----------------------------
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools<77", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 # -----------------------------
 # Project Metadata
 # -----------------------------
 [project]
-name = "hijri-datetime"               # PyPI/package install name (`pip install hijri_datetime`)
-version = "0.1.0"
+name = "hijri-datetime" # PyPI/package install name (`pip install hijri_datetime`)
+# version = "2025.0.0"
+dynamic = ["version"]
+requires-python = ">=3.8"
 authors = [
-    {name = "m.lotfi", email = "m.lotfi@email.com"},
+    { name = "m.lotfi", email = "m.lotfi@email.com" },
 ]
 maintainers = [
-    {name = "m.lotfi", email = "m.lotfi@email.com"},
+    { name = "m.lotfi", email = "m.lotfi@email.com" },
 ]
-description = "Hijri (Islamic) datetime library for Python with partial dates, ranges, and Gregorian/Jalali conversion."
-readme = "README.md"
-requires-python = ">=3.8"
+description = "Pythonic Hijri datetime — handle full & partial dates, ranges, and seamless Gregorian & Jalali conversion."
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { text = "GPL version 3" }  # old-style, accepted
 
+keywords = [
+    "python", "package", "modules", "portable",
+    "hijri", "islamic", "calendar", "datetime"
+]
 
+# Classifiers help PyPI categorize your package
+classifiers = [
+    # How mature is this project? Common values are
+    #   3 - Alpha
+    #   4 - Beta
+    #   5 - Production/Stable
+    "Development Status :: 4 - Beta",
 
-keywords = ["python", "package", "modules", "portable", "hijri", "islamic", "calendar", "datetime"]
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+
+    # Indicate who your project is intended for
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+
+    # Specify the Python versions you support here.
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 # -----------------------------
 # Runtime dependencies
 # -----------------------------
 dependencies = [
-  "jdatetime",
-  "requests",
-  "numpy",
-  "pandas",
+    "jdatetime",
+    "requests",
+    "numpy",
+    "pandas"
 ]
 
 # -----------------------------
@@ -105,109 +136,17 @@ Repository = "https://github.com/mlotfic/hijri_datetime"
 "Bug Tracker" = "https://github.com/mlotfic/hijri_datetime/issues"
 Changelog = "https://github.com/mlotfic/hijri_datetime/blob/main/CHANGELOG.md"
 
+
+
 # -----------------------------
 # setuptools config
 # -----------------------------
-[tool.setuptools]
-package-dir = {"" = "src"}                   # Use src layout
-include-package-data = true                  # Include package data from MANIFEST or tool config
-license-files = ["LICEN[CS]E*"]
-
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["hijri_datetime*"]
-exclude = ["tests*"]
 
-# Include data files (e.g., *.json, *.csv)
-[tool.setuptools.package-data]
-"hijri_datetime.data" = ["*.json", "*.csv", "*.yml", "*.yaml", "*.txt"]
-"*" = ["examples/*.py"]
 
-# Versioning: Using static version above
-# [tool.setuptools_scm]
-# write_to = "src/hijri_datetime/_version.py"
-
-# -----------------------------
-# Pytest Configuration
-# -----------------------------
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py", "*_test.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = [
-    "-v",
-    "--strict-markers",
-    "--strict-config",
-    "--cov=hijri_datetime",               # Updated for new package name
-    "--cov-report=term-missing",
-    "--cov-report=html:htmlcov",
-    "--cov-report=xml",
-]
-markers = [
-    "slow: marks tests as slow",
-    "integration: marks tests as integration tests",
-]
-
-# -----------------------------
-# Black Formatter Config
-# -----------------------------
-[tool.black]
-line-length = 88
-target-version = ["py38", "py39", "py310", "py311", "py312"]
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-  | src/hijri_datetime/_version\.py
-)/
-'''
-
-# -----------------------------
-# Flake8 Linter Config
-# -----------------------------
-[tool.flake8]
-max-line-length = 88
-extend-ignore = ["E203", "W503"]
-exclude = [
-    ".git",
-    "__pycache__",
-    "build",
-    "dist",
-    ".venv",
-    "src/hijri_datetime/_version.py"
-]
-
-# -----------------------------
-# MyPy Type Checker Config
-# -----------------------------
-[tool.mypy]
-python_version = "3.8"
-files = ["src/hijri_datetime", "tests"]
-strict = true
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
-
-# Loosened rules for test files
-[[tool.mypy.overrides]]
-module = "tests.*"
-disallow_untyped_defs = false
+[tool.setuptools_scm]
+write_to = "src/hijri_datetime/_version.py"
+version_scheme = "post-release"
+local_scheme = "dirty-tag"
+fallback_version = "0.0.0"
