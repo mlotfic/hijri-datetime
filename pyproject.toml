@@ -175,6 +175,8 @@ Changelog = "https://github.com/mlotfic/hijri-datetime/blob/main/CHANGELOG.md"
 # packages = ["hijri_datetime"]
 package-dir = {"" = "src"}
 
+package-dir = {"" = "src"}
+
 # Alternative if using flat layout (package directly in root)
 # packages = ["hijri_datetime"]
 
