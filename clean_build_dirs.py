@@ -58,6 +58,37 @@ if __name__ == "__main__":
 
 
 '''
+deactivate
+
+# Create environment (called .venv here)
+python -m venv .venv
+
+# Activate it
+# On Linux/macOS:
+source .venv/bin/activate
+
+# On Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+
+
+pip install virtualenv
+virtualenv myenv
+source myenv/bin/activate   # Linux/macOS
+myenv\Scripts\activate      # Windows
+
+
+
+conda create -n hijridatetimeenv python=3.8.2
+#                                                                                                                                                                                  
+# To activate this environment, use     
+# conda init                                                                                                                                           
+#                                                                                                                                                                                  
+#     $ conda activate hijridatetimeenv
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
 # python -m build
 
 # twine upload --repository testpypi dist/*
