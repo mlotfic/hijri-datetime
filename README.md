@@ -2,6 +2,15 @@
 
 # 💡💡💡💡💡💡 **this not working yet** 💡💡💡💡
 
+# first accurate hijri date
+14-03-1937 AD	
+01-1-1356	AH 
+HJCoSA	
+FALSE
+
+
+
+ 
 📅 **Hijri (Islamic) calendar datetime library for Python**  
 A drop-in replacement for Python's built-in `datetime` module, supporting Hijri date arithmetic, formatting, conversion, partial dates, and integration with `jdatetime`.
 
