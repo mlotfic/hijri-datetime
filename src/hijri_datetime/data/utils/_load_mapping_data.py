@@ -44,8 +44,8 @@ import os
 import pandas as pd
 
 # Default CSV file path relative to this module
-DEFAULT_CSV_PATH = "./mapping_date/calendar_date_dataset.csv.xz"
-# DEBUG:: file_path = "../mapping_date/calendar_date_dataset.csv.xz"
+DEFAULT_CSV_PATH = "./date_dataset/calendar_date_dataset.csv.xz"
+# DEBUG:: file_path = "../date_dataset/calendar_date_dataset.csv.xz"
 
 
 def _load_mapping_data(csv_path=DEFAULT_CSV_PATH):
@@ -60,7 +60,7 @@ def _load_mapping_data(csv_path=DEFAULT_CSV_PATH):
     ----------
     csv_path : str, optional
         Path to the CSV file containing calendar mapping data.
-        Defaults to DEFAULT_CSV_PATH ("./mapping_date/calendar_date_dataset.csv.xz").
+        Defaults to DEFAULT_CSV_PATH ("./date_dataset/calendar_date_dataset.csv.xz").
         Supports compressed files (.xz, .gz, .bz2).
 
     Returns

@@ -1,1 +1,5 @@
-from .date_loader import DateLoader
+from .date_loader import DatabaseLoader
+
+__all__ = [
+    "DatabaseLoader"
+]

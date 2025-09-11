@@ -3,10 +3,11 @@ import pandas as pd
 from typing import Optional, Dict, List, Union
 from dataclasses import dataclass
 
-from utils._load_mapping_data import _load_mapping_data
-from utils._load_hijri_holydays import _load_hijri_holydays
+from .utils._load_mapping_data import _load_mapping_data
+from .utils._load_hijri_holydays import _load_hijri_holydays
 
-class DateLoader:
+
+class DatabaseLoader:
     """
     Calendar data loader with caching and validation capabilities.
 
@@ -27,12 +28,12 @@ class DateLoader:
 
     Examples
     --------
-    >>> loader = DateLoader()
+    >>> loader = DatabaseLoader()
     >>> data = loader.load_data()
     >>> print(f"Loaded {len(data)} calendar records")
 
     >>> # Use custom CSV file
-    >>> loader = DateLoader("/path/to/custom/data.csv")
+    >>> loader = DatabaseLoader("/path/to/custom/data.csv")
     >>> data = loader.load_data()
     """
 
@@ -45,7 +46,7 @@ class DateLoader:
         csv_path : str, optional
             Path to the CSV file containing calendar mapping data.
         """
-        self._data = None  # Cache for loaded data
+        self._data = self.load_data()  # Cache for loaded data
 
     def load_data(self):
         """
@@ -68,7 +69,7 @@ class DateLoader:
 
         Examples
         --------
-        >>> loader = DateLoader()
+        >>> loader = DatabaseLoader()
         >>> data = loader.load_data()  # Loads from disk
         >>> data2 = loader.load_data()  # Returns cached data
         >>> assert data is data2  # Same object reference
@@ -88,7 +89,7 @@ class DateLoader:
 
         Examples
         --------
-        >>> loader = DateLoader()
+        >>> loader = DatabaseLoader()
         >>> data1 = loader.load_data()
         >>> # ... CSV file is updated externally ...
         >>> data2 = loader.reload_data()  # Loads fresh data
@@ -108,7 +109,7 @@ class DateLoader:
 
         Examples
         --------
-        >>> loader = DateLoader()
+        >>> loader = DatabaseLoader()
         >>> ranges = loader.date_ranges()
         >>> print(ranges)
         {
@@ -125,7 +126,7 @@ class DateLoader:
                 'max': years.max()
             },
             'hijri': {
-                'min': data['h_year'].min(), 
+                'min': data['h_year'].min(),
                 'max': data['h_year'].max()
             }
         }
