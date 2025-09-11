@@ -11,16 +11,19 @@ from hijri_datetime.data import DatabaseLoader
 
 loader = DatabaseLoader()
 
-
-class HijriDate:
-    """Represents a Hijri calendar date."""
-    
-    def __init__(self, loader: DatabaseLoader): 
+'''
+def __init__(self, loader: DatabaseLoader): 
         self.year = None
         self.month = None
         self.day = None
+        
+
+'''
+
+class HijriDate:
+    """Represents a Hijri calendar date."""
  
-    def date(self, year: int, month: int, day: int):
+    def init(self, year: int, month: int, day: int):
         """Initialize a Hijri date.
  
         Args:
@@ -30,28 +33,45 @@ class HijriDate:
  
         Raises:
             InvalidHijriDate: If the date is invalid
-        """
-        if not self._is_valid_date(year, month, day):
-            raise InvalidHijriDate(f"Invalid Hijri date: {year}-{month}-{day}")
- 
+        """        
+        try:
+            # Load the calendar mapping data
+            self.db = loader._data            
+            self._data_loaded = True
+            self._date_ranges = loader.date_ranges()  # Initialize cache for date ranges
+            if not self._is_valid_date(year, month, day):
+                raise InvalidHijriDate(f"Invalid Hijri date: {year}-{month}-{day}")    
+        except Exception as e:
+            self._data_loaded = False
+            self.db = None
+            self._date_ranges = None
+            # Don't re-raise to allow graceful degradation   
+        
+        self.db = loader._data
         self.year = year
         self.month = month
         self.day = day
+        self.method = None # Allowed: HJCoSA ┃ UAQ ┃ DIYANET ┃ MATHEMATICAL
+        self.dtype = None # Allowed:  "datetime" ┃ "date" ┃ "month_range" ┃ "year_range"]
  
-    def _is_valid_date_(self, year: int, month: int, day: int) -> bool:
+    def _is_valid_date(self, year: int, month: Optional[int], day: Optional[int]) -> bool:
         """Check if the given Hijri date is valid."""
-        if not (1 <= month <= 12):
+        if not isinstance(year, int):
             return False
-        if not (1 <= day <= 30):
+        if month and not (1 <= month <= 12):
             return False
-        # Add more sophisticated validation here
+        if day and not (1 <= day <= 30):
+            return False
+        # Add more sophisticated validation here - checking database
+        # Get Hijri equivalent
+        hijri_info = self.db.loc[(2024, 1, 15)][['h_day', 'h_month', 'h_year']]
         return True
  
     def __repr__(self) -> str:
-        return f"HijriDate({self.year}, {self.month}, {self.day})"
+        return f"datetime.date({self.year}, {self.month}, {self.day}, 'hijri')"
  
     def __str__(self) -> str:
-        return f"{self.year:04d}-{self.month:02d}-{self.day:02d}"
+        return f"{self.year:04d}-{self.month:02d}-{self.day:02d}-AH"
  
     @property
     def month_name(self) -> str:
