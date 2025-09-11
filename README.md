@@ -21,6 +21,7 @@ FALSE
 📅 **Hijri (Islamic) calendar datetime library for Python**  
 A drop-in replacement for Python's built-in `datetime` module, supporting Hijri date arithmetic, formatting, conversion, partial dates, and integration with `jdatetime`.
 
+>> Buit-in database form (0622-07-19 to 2077-09-31 AD), (0001-01-01 to 1500-12-30 AH) 
 ---
 
 ## Features
