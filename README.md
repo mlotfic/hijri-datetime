@@ -1,27 +1,30 @@
 # hijri-datetime
 
-
 [![PyPI version](https://img.shields.io/pypi/v/hijri-datetime.svg)](https://pypi.org/project/hijri-datetime/)
 [![Python versions](https://img.shields.io/pypi/pyversions/hijri-datetime.svg)](https://pypi.org/project/hijri-datetime/)
 [![License](https://img.shields.io/pypi/l/hijri-datetime.svg)](https://github.com/yourusername/hijri-datetime/blob/main/LICENSE)
 [![Downloads](https://static.pepy.tech/badge/hijri-datetime)](https://pepy.tech/project/hijri-datetime)
 [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://your-docs-link-here)
 
-# 💡💡💡💡💡💡 **this not working yet** 💡💡💡💡
+📅 **Hijri (Islamic) Calendar DateTime Library for Python**  
+A drop-in replacement for Python’s built-in `datetime` module — supporting Hijri date arithmetic, conversion, partial dates, formatting, and integration with `jdatetime`.
 
-# first accurate hijri date
-14-03-1937 AD	
-01-1-1356	AH 
-HJCoSA	
-FALSE
+---
+
+⚠️ **Project Status**  
+This library is under active development and not production-ready yet. Expect API changes.
+
+---
+
+## 📖 Built-in Database Coverage
+
+| Calendar  | Range Supported              | Notes |
+|-----------|------------------------------|-------|
+| Gregorian | 622-07-19 → 2077-09-30 AD    | Epoch (Hijra) to ~1500 AH |
+| Hijri     | 0001-01-01 → 1500-12-30 AH   | Full historical + future |
+| Accuracy  | First verified alignment: **1937-03-14 AD → 1356-01-01 AH** | Method: `HJCoSA` |
 
 
-
- 
-📅 **Hijri (Islamic) calendar datetime library for Python**  
-A drop-in replacement for Python's built-in `datetime` module, supporting Hijri date arithmetic, formatting, conversion, partial dates, and integration with `jdatetime`.
-
->> Buit-in database form (0622-07-19 to 2077-09-31 AD), (0001-01-01 to 1500-12-30 AH) 
 ---
 
 ## Features
