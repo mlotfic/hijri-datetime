@@ -11,6 +11,8 @@ A drop-in replacement for Python’s built-in `datetime` module — supporting H
 
 ---
 
+## 💡💡💡💡💡 This library not working yet 💡💡💡💡
+
 ⚠️ **Project Status**  
 This library is under active development and not production-ready yet. Expect API changes.
 
