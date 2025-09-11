@@ -28,6 +28,12 @@ A drop-in replacement for Python's built-in `datetime` module, supporting Hijri 
 * **HijriDate / HijriDateTime classes**
   Drop-in replacement for `datetime.date` and `datetime.datetime`.
 
+* **Full datetime API support**
+  Methods like `.year`, `.month`, `.day`, `.weekday()`, `.isoweekday()`, `.strftime()`, `.fromisoformat()`, `.today()`, `.now()`.
+
+* **Calendar module compatibility**
+  Leap year checks, month lengths, weekdays, etc.
+
 * **Partial Dates & Ranges**
   Handle missing months or days gracefully:
 
@@ -79,11 +85,7 @@ A drop-in replacement for Python's built-in `datetime` module, supporting Hijri 
   jd = hijri_date.to_jdatetime()
   ```
 
-* **Full datetime API support**
-  Methods like `.year`, `.month`, `.day`, `.weekday()`, `.isoweekday()`, `.strftime()`, `.fromisoformat()`, `.today()`, `.now()`.
 
-* **Calendar module compatibility**
-  Leap year checks, month lengths, weekdays, etc.
 
 ---
 
