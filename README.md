@@ -25,77 +25,65 @@ A drop-in replacement for Python's built-in `datetime` module, supporting Hijri 
 
 ## Features
 
-- **HijriDate / HijriDateTime classes**  
+* **HijriDate / HijriDateTime classes**
   Drop-in replacement for `datetime.date` and `datetime.datetime`.
 
-- **Partial Dates & Ranges**  
+* **Partial Dates & Ranges**
   Handle missing months or days gracefully:
-  - `HijriDate(1446)` → represents the full year.
-  - `HijriDate(1446, 2)` → represents all days of month 2.
-  - Arithmetic supports ranges and comparisons.
 
-- **Gregorian ↔ Hijri Conversion**  
-  - Vectorized conversion using preloaded dataset (from [Aladhan API](https://aladhan.com/islamic-calendar-api)).
-  - Accurate conversion for historical and future dates.
-  
-- **Integration with jdatetime**  
+  * `HijriDate(1446)` → represents the full year.
+  * `HijriDate(1446, 2)` → represents all days of month 2.
+  * Arithmetic supports ranges and comparisons.
+
+* **Gregorian ↔ Hijri Conversion**
+
+  * Vectorized conversion using preloaded dataset (from [Aladhan API](https://aladhan.com/islamic-calendar-api)).
+  * Accurate conversion for historical and future dates.
+
+* **Up-to-date Hijri Calendar via API**
+
+* **Calendar Calculation Methods**
+  Choose the calculation method for Hijri dates.
+
+  **Default:** `HJCoSA` (High Judicial Council of Saudi Arabia – used on [aladhan.com](https://aladhan.com))
+
+  **Available Methods:**
+
+  * `HJCoSA` – High Judicial Council of Saudi Arabia (default)
+  * `UAQ` – Umm al-Qura
+  * `DIYANET` – Diyanet İşleri Başkanlığı
+  * `MATHEMATICAL` – Pure mathematical calculation
+
+  📖 For details, see the [Aladhan API documentation](https://api.aladhan.com/v1/islamicCalendar/methods).
+
+  **Example usage:**
+
+  ```python
+  from hijri_calendar import HijriDate
+
+  # Use default (HJCoSA)
+  date = HijriDate.today()
+
+  # Specify method
+  date_uaq = HijriDate.today(method="UAQ")
+  date_math = HijriDate.today(method="MATHEMATICAL")
+
+  print(date, date_uaq, date_math)
+  ```
+
+* **Integration with jdatetime**
   Convert Hijri dates to Jalali calendar easily:
+
   ```python
   import jdatetime
   jd = hijri_date.to_jdatetime()
-  ````
+  ```
 
 * **Full datetime API support**
   Methods like `.year`, `.month`, `.day`, `.weekday()`, `.isoweekday()`, `.strftime()`, `.fromisoformat()`, `.today()`, `.now()`.
 
 * **Calendar module compatibility**
   Leap year checks, month lengths, weekdays, etc.
-
-* **Uptodate Hijri Calendar via API 
-  
-
----
-
-### Calendar Calculation Methods
-
-You can choose the calculation method for the Hijri calendar.
-
-**Default:** `HJCoSA` (High Judicial Council of Saudi Arabia – used on [aladhan.com](https://aladhan.com))
-
-**Available Methods:**
-
-* `HJCoSA` – High Judicial Council of Saudi Arabia (default)
-* `UAQ` – Umm al-Qura
-* `DIYANET` – Diyanet İşleri Başkanlığı
-* `MATHEMATICAL` – Pure mathematical calculation
-
-📖 For more details, see the [Aladhan API documentation](https://api.aladhan.com/v1/islamicCalendar/methods).
-
-**Example usage:**
-
-```python
-from hijri_calendar import HijriDate
-
-# Use default (HJCoSA)
-date = HijriDate.today()
-
-# Specify method
-date_uaq = HijriDate.today(method="UAQ")
-date_math = HijriDate.today(method="MATHEMATICAL")
-
-print(date, date_uaq, date_math)
-```
-
-* **Vectorized / Bulk Conversion Support**
-  Efficient for millions of rows with pandas/numpy.
-
----
-
-## Installation
-
-```bash
-pip install hijri-datetime
-```
 
 ---
 
