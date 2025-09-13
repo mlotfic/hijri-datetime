@@ -3,6 +3,7 @@
 from datetime import date, datetime, time
 from typing import Optional, Union, Tuple
 import calendar
+import pandas as pd
 
 from .exceptions import InvalidHijriDate
 from .constants import HIJRI_MONTHS, HIJRI_WEEKDAYS
@@ -48,24 +49,95 @@ class HijriDate:
             # Don't re-raise to allow graceful degradation   
         
         self.db = loader._data
-        self.year = year
-        self.month = month
-        self.day = day
-        self.method = None # Allowed: HJCoSA ┃ UAQ ┃ DIYANET ┃ MATHEMATICAL
-        self.dtype = None # Allowed:  "datetime" ┃ "date" ┃ "month_range" ┃ "year_range"]
- 
-    def _is_valid_date(self, year: int, month: Optional[int], day: Optional[int]) -> bool:
+        self.selected_db = 
+        self._h_year = year
+        self._h_month = month
+        self._h_day = day
+        self.method = None # Allowed: "HJCoSA" ┃ "UAQ" ┃ "DIYANET" ┃ "MATHEMATICAL"
+        self.dtype = None  # Allowed: "datetime" ┃ "date" ┃ "month_range" ┃ "year_range"
+
+    def _h_get_valid_dates(self, year: int, month: Optional[int], day: Optional[int]) -> Optional[pd.DataFrame]:
         """Check if the given Hijri date is valid."""
         if not isinstance(year, int):
-            return False
+            return None
         if month and not (1 <= month <= 12):
-            return False
+            return None
         if day and not (1 <= day <= 30):
-            return False
+            return None
+        
         # Add more sophisticated validation here - checking database
+        self.dtype = self.get_dtype(year, month, day)
         # Get Hijri equivalent
-        hijri_info = self.db.loc[(2024, 1, 15)][['h_day', 'h_month', 'h_year']]
-        return True
+        if self._data_loaded:
+            # Get all records
+            if self.dtype == "date":
+                try:
+                    hijri_info = self.db.loc[(year, month, day)][['h_day', 'h_month', 'h_year', 'hijri_method']]
+                    return hijri_info
+                except KeyError:
+                    print(f"   ℹ  Hijri date: {year}-{month}-{day} not available in dataset")
+            elif self.dtype == "month_range":
+                try:
+                    hijri_info = self.db.loc[(year, month, day)][['h_day', 'h_month', 'h_year', 'hijri_method']]
+                    return hijri_info
+                except KeyError:
+                    print(f"   ℹ  Hijri date: {year}-{month} not available in dataset")
+                    
+            elif self.dtype == "year_range":
+                try:
+                    hijri_info = self.db.loc[(year, month, day)][['h_day', 'h_month', 'h_year', 'hijri_method']]
+                    return hijri_info
+                except KeyError:
+                    print(f"   ℹ  Hijri date: {year} not available in dataset")
+                
+        return None
+    
+    def _g_get_valid_dates(self, year: int, month: Optional[int], day: Optional[int]) -> Optional[pd.DataFrame]:
+        """Check if the given Gregorian date is valid."""
+        if not isinstance(year, int):
+            return None
+        if month and not (1 <= month <= 12):
+            return None
+        if day and not (1 <= day <= 31):
+            return None
+        
+        # Add more sophisticated validation here - checking database
+        self.dtype = self.get_dtype(year, month, day)
+        # Get Hijri equivalent
+        if self._data_loaded:
+            # Get all records
+            if self.dtype == "date":
+                try:
+                    hijri_info = self.db.loc[(year, month, day)][['h_day', 'h_month', 'h_year', 'hijri_method']]
+                    return hijri_info
+                except KeyError:
+                    print(f"   ℹ  Hijri date: {year}-{month}-{day} not available in dataset")
+            elif self.dtype == "month_range":
+                try:
+                    hijri_info = self.db.loc[(year, month, day)][['h_day', 'h_month', 'h_year', 'hijri_method']]
+                    return hijri_info
+                except KeyError:
+                    print(f"   ℹ  Hijri date: {year}-{month} not available in dataset")
+                    
+            elif self.dtype == "year_range":
+                try:
+                    hijri_info = self.db.loc[(year, month, day)][['h_day', 'h_month', 'h_year', 'hijri_method']]
+                    return hijri_info
+                except KeyError:
+                    print(f"   ℹ  Hijri date: {year} not available in dataset")
+                
+        return None
+    
+    def get_dtype(self, year: int, month: Optional[int], day: Optional[int]):
+        Allowed= ["datetime", "date", "month_range", "year_range"]
+        if year and month and day:
+            return Allowed[1]
+        if year and month and not day:
+            return Allowed[2]
+        if year and not month and not day:
+            return Allowed[3]
+        
+        return None
  
     def __repr__(self) -> str:
         return f"datetime.date({self.year}, {self.month}, {self.day}, 'hijri')"

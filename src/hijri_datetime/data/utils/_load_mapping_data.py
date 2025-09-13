@@ -135,10 +135,6 @@ def _load_mapping_data(csv_path=DEFAULT_CSV_PATH):
         # Sort by Gregorian date for consistent ordering
         # This ensures chronological order and better performance for date range queries
         df = df.sort_values(["g_year", "g_month", "g_day"])
-        
-        # Set multi-index for efficient date-based lookups
-        # This allows queries like df.loc[(2024, 1, 15)] for specific dates
-        df = df.set_index(["g_year", "g_month", "g_day"])
 
         print(f"Successfully processed {len(df):,} valid calendar mapping records")
         return df
